@@ -1,0 +1,10 @@
+pipeline {
+    agent any 
+    stages {
+        stage('git clone') {
+            steps {
+                git credentialsId: 'github_cerd', url: 'https://github.com/prasannakumarjena/react-flask-example.git' 
+            }
+        }
+    }
+}
