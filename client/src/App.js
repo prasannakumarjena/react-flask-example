@@ -37,7 +37,7 @@ export const AppContainer = connect(
 export const Home = (props) => {
   return (
     <span>
-      <h2>Home</h2>
+      <h2>prasanna kumar jena</h2>
     </span>
   );
 }
