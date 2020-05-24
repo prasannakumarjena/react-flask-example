@@ -9,14 +9,6 @@ pipeline {
                 sh "docker build . -t pkjdocker/myapp:${DOCKER_TAG}"
             }
         }
-        stage('dockerhub push'){
-            steps{
-                withCredentials([string(credentialsId: 'dockerpwd', variable: 'dockerhubpwd')]) {
-                sh "docker login -u pkjdocker -p ${dockerhubpwd}"
-                sh "docker push pkjdocker/myapp:${DOCKER_TAG}"
-               }
-            }
-        }
     }
 }
 def getDockerTag(){
