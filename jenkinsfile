@@ -17,7 +17,7 @@ pipeline {
               }
             }
         }
-        stage{
+        stage('deploy to k8s'){
             steps{
                 sh "chmod + changeTag.sh"
                 sh "./changeTag.sh ${DOCKER_TAG}"
