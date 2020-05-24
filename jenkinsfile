@@ -22,7 +22,7 @@ pipeline {
                 sh "chmod + changeTag.sh"
                 sh "./changeTag.sh ${DOCKER_TAG}"
                 sshagent(['kops-server']) {
-                 sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@ec2-35-154-168-0:/root"
+                sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@ec2-35-154-168-0:/root"
                  }
             }
         }
