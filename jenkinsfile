@@ -17,9 +17,19 @@ pipeline {
               }
             }
         }
+        stage{
+            steps{
+                sh "chmod + changeTag.sh"
+                sh "./changeTag.sh ${DOCKER_TAG}"
+                sshagent(['kops-server']) {
+                 sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@ec2-35-154-168-0:/root"
+                 }
+            }
+        }
     }
 }
 def getDockerTag(){
     def tag = sh script: 'git rev-parse HEAD' , returnStdout: true
     return tag
 }
+
