@@ -1,9 +1,13 @@
 pipeline {
     agent any
+    environment {
+    registry = "pkjdocker/myapp"
+    dockerImage = ''
+  }
     stages{
         stage('build Docker image'){
             steps{
-                sh "docker build . -t pkjdocker/myapp:latest"
+               sh "docker build . -t pkjdocker/myapp:latest"
             }
         }
         stage('dockerhub push'){
@@ -17,14 +21,8 @@ pipeline {
         stage('deploy to k8s server'){
             steps{
                 sshagent(['kops-server']) {
-                sh "scp -o StrictHostKeyChecking=no services.yml pods.yml ec2-user@13.233.215.240:/home/ec2-user"
-                script{
-                    try{
-                        sh "ssh ec2-user@13.233.215.240 kubectl apply -f ."
-                    }catch(error){
-                        sh "ssh ec2-user@13.233.215.240 kubectl create -f ."
-                      }
-                   } 
+                sh "scp -o StrictHostKeyChecking=no pods.yml ec2-user@13.233.215.240:/home/ec2-user"
+                sh "ssh ec2-user@13.233.215.240 kubectl apply -f ."
                  }
             }
         }
