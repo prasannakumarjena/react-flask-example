@@ -3,7 +3,7 @@ pipeline {
     stages{
         stage('build Docker image'){
             steps{
-               sh 'sudo docker build . -t pkjdocker/myapp:latest'
+               sh 'docker build . -t pkjdocker/myapp:latest'
             }
         }
         stage('dockerhub push'){
