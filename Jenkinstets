@@ -1,19 +1,16 @@
 pipeline {
     agent any
-    environment{
-        DOCKER_TAG = getDockerTag()
-    }
     stages{
         stage('build Docker image'){
             steps{
-                sh "docker build . -t pkjdocker/myapp:${DOCKER_TAG}"
+                sh "docker build . -t pkjdocker/myapp:latest"
             }
         }
         stage('dockerhub push'){
             steps{
                 withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerhubpwd')]) {
                 sh "docker login -u pkjdocker -p ${dockerhubpwd}"
-                sh "docker push pkjdocker/myapp:${DOCKER_TAG}"
+                sh "docker push pkjdocker/myapp:latest"
               }
             }
         }
@@ -33,8 +30,3 @@ pipeline {
         }
     }
 }
-def getDockerTag(){
-    def tag = sh script: 'git rev-parse HEAD' , returnStdout: true
-    return tag
-}
-
