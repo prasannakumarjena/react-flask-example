@@ -30,7 +30,6 @@ spec:
   ports:
     - port: 80
       targetPort: 5000
-      nodePort: 30008
   type: LoadBalancer
 ---
 apiVersion: policy/v1beta1
