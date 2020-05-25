@@ -1,13 +1,9 @@
 pipeline {
     agent any
-    environment {
-    registry = "pkjdocker/myapp"
-    dockerImage = ''
-  }
     stages{
         stage('build Docker image'){
             steps{
-               sh "sudo docker build . -t pkjdocker/myapp:latest"
+               sh 'sudo docker build . -t pkjdocker/myapp:latest'
             }
         }
         stage('dockerhub push'){
