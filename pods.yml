@@ -1,12 +1,41 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
 metadata:
-  name: nodeapp
-  labels:
-    app: nodeapp
+  name: nginx
 spec:
-  containers:
-    - name: nodeapp
-      image: pkjdocker/myapp:tagVersion
-      ports:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: pkjdocker/pythonapp:tagVersion
+        imagePullPolicy: Always
+        ports:
         - containerPort: 5000
+---
+# nginx_svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-elb
+  labels:
+    app: nginx
+spec:
+  selector:
+    app: nginx
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
