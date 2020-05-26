@@ -37,7 +37,7 @@ export const AppContainer = connect(
 export const Home = (props) => {
   return (
     <span>
-      <h2>my app</h2>
+      <h2>new app</h2>
     </span>
   );
 }
