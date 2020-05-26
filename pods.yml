@@ -17,6 +17,7 @@ spec:
       containers:
       - name: nginx
         image: pkjdocker/myapp:latest
+        imagePullPolicy: "Always"
         ports:
         - containerPort: 5000
 ---
