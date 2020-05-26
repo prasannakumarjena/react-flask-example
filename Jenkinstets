@@ -20,7 +20,7 @@ pipeline {
                 sh "scp -o StrictHostKeyChecking=no pods.yml ec2-user@15.206.169.122:/home/ec2-user"
                 script{
                     try{
-                       sh "kubectl rollout restart deployment/nginx"
+                       sh "ssh ec2-user@15.206.169.122 kubectl rollout restart deployment/nginx"
                     }catch(error){
                        sh "ssh ec2-user@15.206.169.122 kubectl apply -f ."
                     }
