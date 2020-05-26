@@ -16,7 +16,7 @@ pipeline {
         }
         stage('deploy to k8s server'){
             steps{
-                sshagent(['kops-server']) {
+                sshagent(['kops-server']){
                 sh "scp -o StrictHostKeyChecking=no pods.yml ec2-user@15.206.169.122:/home/ec2-user"
                 script{
                     try{
@@ -24,8 +24,9 @@ pipeline {
                     }catch(error){
                        sh "kubectl rollout restart deployment/nginx"
                     }
-               }
-            }
+                  } 
+                }
+           } 
         }
     }
 }
